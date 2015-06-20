@@ -10,4 +10,5 @@ a virtual Gamepak from the nestest ROM in test/ and compares the output
 of the CPU to the log from nestest. Currently, the CPU does not complete
 the test and thus is not yet suitable for use in an NES emulator. However, 
 this should not affect your usage of the program, as the known issues don't
-arise when used from the command line. If they do, please let me know!
+arise when used from the command line interface. 
+If they do, please let me know!
