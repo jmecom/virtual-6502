@@ -44,7 +44,6 @@ class CPU():
         # 256 bytes per page
         # start at page C, so C000 -> 0000
         #            page offset (msb) + address (bottom 3 bytes)
-        # print(address, -3072 + (address >> 12)*256 + (address & 4095))
         return -3072 + (address >> 12)*256 + (address & 4095)
 
     def print_state(self, info):
