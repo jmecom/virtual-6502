@@ -1,4 +1,4 @@
-import readline
+import sys, readline
 from cpu import *
 from cpu_constants import *
 
@@ -7,6 +7,12 @@ class CLI():
 
     def __init__(self):
         self.cmd_buffer = []
+
+        self.cli_funcs = {
+            'state': self.print_state, 'status': self.print_status,
+            'history': self.print_history, 'mem': self.print_memory,
+            'exit': sys.exit
+        }
 
         self.cmds = ['state', 'status', 'history', 'mem', 'exit'] + [i.lower() for i in instr_names]
         readline.set_completer(self.completer)
@@ -23,10 +29,18 @@ class CLI():
         except IndexError:
             return None
 
-    def execute(self, filename):
+    def execute(self, cpu, filename):
+        """ Exectues a program from a file """
         with open(filename) as f:
             for line in f:
-                pass
+                inp = line.rstrip().split(' ')
+                cmd = inp[0]
+
+                if cmd in self.cli_funcs:
+                    self.cli_funcs[cmd](cpu, '')
+                else:
+                    cpu.step(self.step(inp))
+                    self.print_state(cpu, inp)
 
     def step(self, inp):
         """ Takes in a instruction from the user and returns an Info object
@@ -47,16 +61,18 @@ class CLI():
         """ Appends a command to the command history buffer """
         self.cmd_buffer.append(cmd)
 
-    def print_state(self, cpu):
+    def print_state(self, cpu, inp):
         """ Prints the current state of the CPU """
-        print("A:%s X:%s Y:%s P:%s SP:%s CYC:%d" % (format(cpu.A, 'x'), format(cpu.X, 'x'), format(cpu.Y, 'x'), format(cpu.P, 'x'), format(cpu.SP, 'x'), (cpu.cycle*3)%341))
+        print("A:%s X:%s Y:%s P:%s SP:%s CYC:%d" % (format(cpu.A, 'x'), \
+        format(cpu.X, 'x'), format(cpu.Y, 'x'), format(cpu.P, 'x'),     \
+        format(cpu.SP, 'x'), (cpu.cycle*3)%341))
 
-    def print_status(self, cpu):
+    def print_status(self, cpu, inp):
         """ Prints the status register """
         # TODO print this in a better way
         print("%s" % format(cpu.P, 'b'))
 
-    def print_history(self):
+    def print_history(self, cpu, inp):
         """ Prints the command input history """
         for cmd in self.cmd_buffer:
             print(cmd)

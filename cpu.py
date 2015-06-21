@@ -24,7 +24,7 @@ class CPU():
         self.P  = 0b00100100 # Status register
 
         self.address_mode = IMMEDIATE # TODO
-        self.memory = [0] * 0xFFFF
+        self.memory = [0] * 65536
         self.cycle = 0
         self.SL = 241   # TODO implement this
         self.pc_set = False
@@ -51,8 +51,9 @@ class CPU():
         bytes_str = " ".join([hex(b) for b in info.bytes])
         name = instr_names[info.opcode]
 
-        # TODO clean this up
-        status_str = "A:%s X:%s Y:%s P:%s SP:%s CYC:%d SL:%d" % (format(self.A, 'x'), format(self.X, 'x'), format(self.Y, 'x'), format(self.P, 'x'), format(self.SP, 'x'), (self.cycle*3)%341, self.SL)
+        status_str = "A:%s X:%s Y:%s P:%s SP:%s CYC:%d SL:%d" % \
+        (format(self.A, 'x'), format(self.X, 'x'), format(self.Y, 'x'), \
+        format(self.P, 'x'), format(self.SP, 'x'), (self.cycle*3)%341, self.SL)
 
         print(str(format(self.PC, '02x')) + " " + bytes_str +
          " "*(8-len(bytes_str)+2) + name + " "*4 + status_str)
