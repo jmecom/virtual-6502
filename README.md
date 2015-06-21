@@ -1,8 +1,10 @@
 # Virtual6502
 An emulator of the NES 6502 CPU written in Python.
 
-## Usage
-Run with `python3 main.py`.
+## Running
+To enter interactive mode, run with `python3 main.py`.
+
+To run a program you've written, pass the filename as an argument: `python3 main.py example.vsp`.
 
 ## Testing
 You can test the CPU by running `python3 test_nestest.py`. This creates
