@@ -23,7 +23,6 @@ class GamePak():
             # Every .nes file needs this constant in the header
             raise Exception("File header is not valid.")
 
-        # TODO handle mapper ids
         self.prg_rom_size = header[4]
         self.chr_rom_size = header[5]
         self.flag6 = header[6]

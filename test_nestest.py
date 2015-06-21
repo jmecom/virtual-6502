@@ -4,7 +4,8 @@ from gamepak import *
 
 class TestNES(unittest.TestCase):
     def test_cpu(self):
-        """ Tests for correctness of the CPU and its instructions by comparing against logs from known working emulators """
+        """Tests for correctness of the CPU and its instructions by comparing
+        against logs from known working emulators"""
         cpu  = CPU()
         game = GamePak('test/nestest.nes')
 

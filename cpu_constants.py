@@ -1,9 +1,6 @@
 # CPU clock frequency
 clock_freq = 1789773
 
-ones   = 0b11111111
-zeros  = 0b00000000
-
 # Addressing Modes
 # zp = zero-page, pi = pre-indexed
 IMMEDIATE   = 1

@@ -8,30 +8,25 @@ def main(program_name=None):
 
     if program_name:
         cli.execute(cpu, program_name)
-
+        sys.exit()
     else:
+        print("Virtual6502 v1.0 \n"
+        "Type help or view the readme for instructions \n")
+
         while True:
             inp = input('> ').lower().split(' ')
             if len(inp) == 0:
                 continue
 
             try:
-                # Input does not affect CPU
                 cmd = inp[0]
-                if cmd == 'state':
-                    cli.print_state(cpu)
-                elif cmd == 'status':
-                    cli.print_status(cpu)
-                elif cmd == 'history':
-                    cli.print_history()
-                elif cmd == 'mem':
-                    cli.print_memory(cpu, inp)
-                elif cmd == 'exit':
-                    sys.exit()
-                # Input was a CPU instruction
+                if cmd in cli.cli_funcs:
+                    # Input does not affect CPU
+                    cli.cli_funcs[cmd](cpu, inp)
                 else:
-                    cpu.step(info = cli.step(inp))
-                    cli.print_state(cpu)
+                    # Input was a CPU instruction
+                    cpu.step(cli.step(inp))
+                    cli.print_state(cpu, inp)
             except SystemExit:
                 raise
             except:
