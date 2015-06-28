@@ -1,5 +1,5 @@
 # Virtual6502
-An emulator of the NES 6502 CPU written in Python.
+A virtual machien for the NES 6502 CPU written in Python.
 
 ## Running
 To enter interactive mode, run with `python3 main.py`.
