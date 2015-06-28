@@ -14,3 +14,8 @@ the test and thus is not yet suitable for use in an NES emulator. However,
 this should not affect your usage of the program, as the known issues don't
 arise when used from the command line interface. 
 If they do, please let me know!
+
+## Todo list
+* Finish the instruction set
+* Implement complete assembly language with support for labels, comments, etc.
+* Implement a screen to output to
