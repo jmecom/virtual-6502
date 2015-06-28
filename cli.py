@@ -1,4 +1,4 @@
-import sys, readline
+import sys, readline, inspect
 from cpu import *
 from cpu_constants import *
 
@@ -12,7 +12,7 @@ class CLI():
         self.cli_funcs = {
             'state': self.print_state, 'status': self.print_status,
             'history': self.print_history, 'mem': self.print_memory,
-            'exit': self.exit
+            'help': self.print_help, 'exit': self.exit
         }
 
         self.cmds = ['state', 'status', 'history', 'mem', 'exit'] + \
@@ -62,7 +62,7 @@ class CLI():
         self.cmd_buffer.append(cmd)
 
     def print_state(self, inp):
-        """Prints the current state of the self.cpu"""
+        """Prints the current state of the cpu"""
         print("A:%s X:%s Y:%s P:%s SP:%s CYC:%d" % (format(self.cpu.A, 'x'), \
         format(self.cpu.X, 'x'), format(self.cpu.Y, 'x'), format(self.cpu.P, 'x'), \
         format(self.cpu.SP, 'x'), (self.cpu.cycle*3)%341))
@@ -84,6 +84,15 @@ class CLI():
         except:
             print('Error: memory location out of range')
             raise
+
+    def print_help(self, inp):
+        """Prints the docstring for an instruction"""
+        instr  = inp[1]
+        try:
+            opcode = instr_names.index(instr.upper())
+            print(inspect.getdoc(instr_functions[opcode]))
+        except:
+            print(inspect.getdoc(self.cli_funcs[instr.lower()]))
 
     def exit(self, inp):
         sys.exit()
