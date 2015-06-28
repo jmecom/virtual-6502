@@ -4,7 +4,7 @@ from cli import *
 
 def main(program_name=None):
     cpu = CPU()
-    cli = CLI()
+    cli = CLI(cpu)
 
     if program_name:
         cli.execute(cpu, program_name)
@@ -22,11 +22,11 @@ def main(program_name=None):
                 cmd = inp[0]
                 if cmd in cli.cli_funcs:
                     # Input does not affect CPU
-                    cli.cli_funcs[cmd](cpu, inp)
+                    cli.cli_funcs[cmd](inp)
                 else:
                     # Input was a CPU instruction
                     cpu.step(cli.step(inp))
-                    cli.print_state(cpu, inp)
+                    cli.print_state(inp)
             except SystemExit:
                 raise
             except:

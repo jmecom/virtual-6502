@@ -26,7 +26,7 @@ class CPU():
         self.address_mode = IMMEDIATE # TODO
         self.memory = [0] * 65536
         self.cycle = 0
-        self.SL = 241   # TODO implement this
+        self.SL = 241   # TODO
         self.pc_set = False
 
     def step(self, info):
@@ -354,11 +354,17 @@ class CPU():
         with the current value of the carry flag whilst the old bit 7
         becomes the new carry flag value."""
         # TODO should be able to rotate mem loc as well
-        val = check_bit(self.P, 0)
-        if check_bit(self.A, 0):
-            self.P = set_bit(self.P, 7)
-        else:
-            self.P = clear_bit(self.P, 7)
+        # TODO
+        # val = check_bit(self.P, 0)
+        # if check_bit(self.A, 0):
+        #     self.P = set_bit(self.P, 7)
+        # else:
+        #     self.P = clear_bit(self.P, 7)
+
+    def ror(self, info):
+        # TODO
+        pass
+
 
     def slo(self, info):
         """Unofficial opcode - unimplemented."""
@@ -404,6 +410,26 @@ class CPU():
         """Unofficial opcode - unimplemented."""
         pass
 
+    def rra(self, info):
+        """Unofficial opcode - unimplemented."""
+        pass
+
+    def alr(self, info):
+        """Unofficial opcode - unimplemented."""
+        pass
+
+    def shx(self, info):
+        """Unofficial opcode - unimplemented."""
+        pass
+
+    def ahx(self, info):
+        """Unofficial opcode - unimplemented."""
+        pass
+
+    def axs(self, info):
+        """Unofficial opcode - unimplemented."""
+        pass
+
 instr_functions = [
     "BRK", CPU.ora, CPU.kil, CPU.slo, CPU.nop, CPU.ora, CPU.asl, CPU.slo,
     CPU.php, CPU.ora, CPU.asl, CPU.anc, CPU.nop, CPU.ora, CPU.asl, CPU.slo,
@@ -414,23 +440,23 @@ instr_functions = [
     CPU.bmi, CPU.and_, CPU.kil, CPU.rla, CPU.nop, CPU.and_, "ROL", CPU.rla,
     CPU.sec, CPU.and_, CPU.nop, CPU.rla, CPU.nop, CPU.and_, "ROL", CPU.rla,
     "RTI", CPU.eor, CPU.kil, CPU.sre, CPU.nop, CPU.eor, CPU.lsr, CPU.sre,
-    CPU.pha, CPU.eor, CPU.lsr, "ALR", CPU.jmp, CPU.eor, CPU.lsr, CPU.sre,
+    CPU.pha, CPU.eor, CPU.lsr, CPU.alr, CPU.jmp, CPU.eor, CPU.lsr, CPU.sre,
     CPU.bvc, CPU.eor, CPU.kil, CPU.sre, CPU.nop, CPU.eor, CPU.lsr, CPU.sre,
     "CLI", CPU.eor, CPU.nop, CPU.sre, CPU.nop, CPU.eor, CPU.lsr, CPU.sre,
-    CPU.rts, CPU.adc, CPU.kil, "RRA", CPU.nop, CPU.adc, "ROR", "RRA",
-    CPU.pla, CPU.adc, "ROR", CPU.arr, CPU.jmp, CPU.adc, "ROR", "RRA",
-    CPU.bvs, CPU.adc, CPU.kil, "RRA", CPU.nop, CPU.adc, "ROR", "RRA",
-    CPU.sei, CPU.adc, CPU.nop, "RRA", CPU.nop, CPU.adc, "ROR", "RRA",
+    CPU.rts, CPU.adc, CPU.kil, CPU.rra, CPU.nop, CPU.adc, "ROR", CPU.rra,
+    CPU.pla, CPU.adc, "ROR", CPU.arr, CPU.jmp, CPU.adc, "ROR", CPU.rra,
+    CPU.bvs, CPU.adc, CPU.kil, CPU.rra, CPU.nop, CPU.adc, "ROR", CPU.rra,
+    CPU.sei, CPU.adc, CPU.nop, CPU.rra, CPU.nop, CPU.adc, "ROR", CPU.rra,
     CPU.nop, CPU.sta, CPU.nop, CPU.sax, "STY", CPU.sta, CPU.stx, CPU.sax,
     "DEY", CPU.nop, "TXA", CPU.xaa, "STY", CPU.sta, CPU.stx, CPU.sax,
-    CPU.bcc, CPU.sta, CPU.kil, "AHX", "STY", CPU.sta, CPU.stx, CPU.sax,
-    "TYA", CPU.sta, "TXS", "TAS", "SHY", CPU.sta, "SHX", "AHX",
+    CPU.bcc, CPU.sta, CPU.kil, CPU.ahx, "STY", CPU.sta, CPU.stx, CPU.sax,
+    "TYA", CPU.sta, "TXS", "TAS", "SHY", CPU.sta, CPU.shx, CPU.ahx,
     CPU.ldy, CPU.lda, CPU.ldx, CPU.lax, CPU.ldy, CPU.lda, CPU.ldx, CPU.lax,
     "TAY", CPU.lda, "TAX", CPU.lax, CPU.ldy, CPU.lda, CPU.ldx, CPU.lax,
     CPU.bcs, CPU.lda, CPU.kil, CPU.lax, CPU.ldy, CPU.lda, CPU.ldx, CPU.lax,
     CPU.clv, CPU.lda, "TSX", "LAS", CPU.ldy, CPU.lda, CPU.ldx, CPU.lax,
     CPU.cpy, CPU.cmp, CPU.nop, CPU.dcp, CPU.cpy, CPU.cmp, CPU.dec, CPU.dcp,
-    "INY", CPU.cmp, "DEX", "AXS", CPU.cpy, CPU.cmp, CPU.dec, CPU.dcp,
+    "INY", CPU.cmp, "DEX", CPU.axs, CPU.cpy, CPU.cmp, CPU.dec, CPU.dcp,
     CPU.bne, CPU.cmp, CPU.kil, CPU.dcp, CPU.nop, CPU.cmp, CPU.dec, CPU.dcp,
     CPU.cld, CPU.cmp, CPU.nop, CPU.dcp, CPU.nop, CPU.cmp, CPU.dec, CPU.dcp,
     CPU.cpx, "SBC", CPU.nop, CPU.isc, CPU.cpx, "SBC", CPU.inc, CPU.isc,

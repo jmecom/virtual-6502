@@ -3,9 +3,10 @@ from cpu import *
 from cpu_constants import *
 
 class CLI():
-    """Provides a command line interface for 6502 CPU"""
+    """Provides a command line interface for 6502 self.cpu"""
 
-    def __init__(self):
+    def __init__(self, cpu):
+        self.cpu = cpu
         self.cmd_buffer = []
 
         self.cli_funcs = {
@@ -28,7 +29,7 @@ class CLI():
         except IndexError:
             return None
 
-    def execute(self, cpu, filename):
+    def execute(self, filename):
         """Exectues a program from a file"""
         with open(filename) as f:
             for line in f:
@@ -36,14 +37,14 @@ class CLI():
                 cmd = inp[0]
 
                 if cmd in self.cli_funcs:
-                    self.cli_funcs[cmd](cpu, inp)
+                    self.cli_funcs[cmd](self.cpu, inp)
                 else:
-                    cpu.step(self.step(inp))
-                    self.print_state(cpu, inp)
+                    self.cpu.step(self.step(inp))
+                    self.print_state(self.cpu, inp)
 
     def step(self, inp):
         """Takes in a instruction from the user and returns an Info object
-        to be passed to the CPU"""
+        to be passed to the self.cpu"""
         try:
             instr  = inp[0].upper()
             opcode = instr_names.index(instr)
@@ -60,29 +61,29 @@ class CLI():
         """Appends a command to the command history buffer"""
         self.cmd_buffer.append(cmd)
 
-    def print_state(self, cpu, inp):
-        """Prints the current state of the CPU"""
-        print("A:%s X:%s Y:%s P:%s SP:%s CYC:%d" % (format(cpu.A, 'x'), \
-        format(cpu.X, 'x'), format(cpu.Y, 'x'), format(cpu.P, 'x'), \
-        format(cpu.SP, 'x'), (cpu.cycle*3)%341))
+    def print_state(self, inp):
+        """Prints the current state of the self.cpu"""
+        print("A:%s X:%s Y:%s P:%s SP:%s CYC:%d" % (format(self.cpu.A, 'x'), \
+        format(self.cpu.X, 'x'), format(self.cpu.Y, 'x'), format(self.cpu.P, 'x'), \
+        format(self.cpu.SP, 'x'), (self.cpu.cycle*3)%341))
 
-    def print_status(self, cpu, inp):
+    def print_status(self, inp):
         """Prints the status register"""
         # TODO print this in a better way
-        print("%s" % format(cpu.P, 'b'))
+        print("%s" % format(self.cpu.P, 'b'))
 
-    def print_history(self, cpu, inp):
+    def print_history(self, inp):
         """Prints the command input history"""
         for cmd in self.cmd_buffer:
             print(cmd)
 
-    def print_memory(self, cpu, inp):
+    def print_memory(self, inp):
         """Prints a segment of memory"""
         try:
-            print(cpu.memory[int(inp[1])])
+            print(self.cpu.memory[int(inp[1])])
         except:
             print('Error: memory location out of range')
             raise
 
-    def exit(self, cpu, inp):
+    def exit(self, inp):
         sys.exit()
