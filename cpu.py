@@ -23,7 +23,7 @@ class CPU():
         self.SP = 0xFD       # Stack pointer
         self.P  = 0b00100100 # Status register
 
-        self.address_mode = IMMEDIATE # TODO
+        self.address_mode = ABSOLUTE # TODO, implement other modes
         self.memory = [0] * 65536
         self.cycle = 0
         self.SL = 241   # TODO

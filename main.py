@@ -2,16 +2,25 @@ import sys
 from cpu import *
 from cli import *
 
+# TODO
+# Write a parser for labels to run when program_name != None
+# Finish the instruction set
+# Allow for labels even in CLI mode
+#
+# Write and test some example progrmas
+#
+# Print 'status' in a nicer way
+# Finish the README and help features
 def main(program_name=None):
     cpu = CPU()
     cli = CLI(cpu)
 
     if program_name:
-        cli.execute(cpu, program_name)
+        cli.execute(program_name)
         sys.exit()
     else:
-        print("Virtual6502 v1.0 \n"
-        "Type help or view the readme for instructions \n")
+        print("Virtual6502 v1.1 \n"
+        "Type help or view the readme for instructions. \n")
 
         while True:
             inp = input('> ').lower().split(' ')
